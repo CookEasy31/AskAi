@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ask.ai</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-mode de">
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+            </div>
+            <h1><span class="text-primary">Ask</span>.<span class="text-accent">ai</span></h1>
+            <p class="subtitle">
+                <span class="lang-de">Erstelle Berichte, Analysen oder kreative Inhalte auf Basis deiner Daten. Stelle Text, Dateien oder Bilder bereit und lass die KI den Rest erledigen.</span>
+                <span class="lang-en">Create reports, analyses, or creative content based on your data. Provide text, files, or images and let the AI handle the rest.</span>
+            </p>
+        </div>
+        <div class="toggle-container">
+            <div class="lang-toggle">
+                <button id="lang-toggle-btn" aria-label="Toggle language">
+                    <i class="fas fa-language"></i>
+                </button>
+            </div>
+            <div class="theme-toggle">
+                <button id="theme-toggle-btn" aria-label="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="content-card input-card">
+            <div class="card-header">
+                <i class="fas fa-file-import"></i>
+                <h2>
+                    <span class="lang-de">Eingabe & Konfiguration</span>
+                    <span class="lang-en">Provide Input & Configure</span>
+                </h2>
+            </div>
+            <form id="input-form">
+                <!-- File Upload Section (Now at the top) -->
+                <div class="input-section file-section">
+                    <div class="upload-options">
+                        <div class="upload-option">
+                            <label for="file-input" class="upload-button">
+                                <i class="fas fa-file-alt"></i>
+                                <span class="lang-de">Datei hochladen</span>
+                                <span class="lang-en">Upload File</span>
+                            </label>
+                            <input type="file" id="file-input" name="inputFile" accept=".txt, .md, .csv, .pdf">
+                            <small>txt, md, csv, pdf</small>
+                        </div>
+                        <div class="upload-option">
+                            <label for="image-input" class="upload-button">
+                                <i class="fas fa-image"></i>
+                                <span class="lang-de">Bild hochladen</span>
+                                <span class="lang-en">Upload Image</span>
+                            </label>
+                            <input type="file" id="image-input" name="imageFile" accept=".jpg, .jpeg, .png, .gif, .webp, .heic, .heif">
+                            <small>png, jpg, webp, gif, heic, heif</small>
+                        </div>
+                    </div>
+                    
+                    <div id="file-info" class="file-info" style="display: none;">
+                        <span id="file-name"></span>
+                        <button type="button" id="remove-file"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+
+                <!-- Optional Text Input for Title and Description -->
+                <div class="input-row">
+                    <div class="form-group">
+                        <label for="topic-input">
+                            <span class="lang-de">Titel (Optional)</span>
+                            <span class="lang-en">Title (Optional)</span>
+                        </label>
+                        <input type="text" id="topic-input" name="topic" placeholder="">
+                        <small class="lang-de">Bleibt leer, wird automatisch generiert</small>
+                        <small class="lang-en">Will be auto-generated if left empty</small>
+                    </div>
+                </div>
+
+                <div class="input-section">
+                    <h3>
+                        <span class="lang-de">Ausgabeformat / Tonalität</span>
+                        <span class="lang-en">Output Format / Tone</span>
+                    </h3>
+                    <div class="format-options">
+                        <label class="format-option active">
+                            <input type="radio" name="format" value="Report" checked>
+                            <div class="option-content">
+                                <i class="fas fa-file-alt"></i>
+                                <span class="lang-de">Bericht</span>
+                                <span class="lang-en">Report</span>
+                            </div>
+                        </label>
+                        <label class="format-option">
+                            <input type="radio" name="format" value="Summary">
+                            <div class="option-content">
+                                <i class="fas fa-list"></i>
+                                <span class="lang-de">Summary</span>
+                                <span class="lang-en">Summary</span>
+                            </div>
+                        </label>
+                        <label class="format-option">
+                            <input type="radio" name="format" value="Technical">
+                            <div class="option-content">
+                                <i class="fas fa-cogs"></i>
+                                <span class="lang-de">Technisch</span>
+                                <span class="lang-en">Technical</span>
+                            </div>
+                        </label>
+                        <label class="format-option">
+                            <input type="radio" name="format" value="Creative">
+                            <div class="option-content">
+                                <i class="fas fa-paint-brush"></i>
+                                <span class="lang-de">Kreativ</span>
+                                <span class="lang-en">Creative</span>
+                            </div>
+                        </label>
+                        <label class="format-option">
+                            <input type="radio" name="format" value="Blog">
+                            <div class="option-content">
+                                <i class="fas fa-blog"></i>
+                                <span class="lang-de">Blog</span>
+                                <span class="lang-en">Blog</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="input-section two-columns">
+                    <div class="column">
+                        <h3>
+                            <span class="lang-de">Ziellänge</span>
+                            <span class="lang-en">Target Length</span>
+                        </h3>
+                        <div class="length-options">
+                            <label class="length-option">
+                                <input type="radio" name="length" value="Brief">
+                                <div class="option-content">
+                                    <span class="lang-de">Kurz</span>
+                                    <span class="lang-en">Brief</span>
+                                </div>
+                            </label>
+                            <label class="length-option active">
+                                <input type="radio" name="length" value="Standard" checked>
+                                <div class="option-content">
+                                    <span class="lang-de">Standard</span>
+                                    <span class="lang-en">Standard</span>
+                                </div>
+                            </label>
+                            <label class="length-option">
+                                <input type="radio" name="length" value="Detailed">
+                                <div class="option-content">
+                                    <span class="lang-de">Ausführlich</span>
+                                    <span class="lang-en">Detailed</span>
+                                </div>
+                            </label>
+                        </div>
+                        <small class="word-count" id="length-description">~400-600 Wörter</small>
+                    </div>
+                    
+                    <div class="column">
+                        <h3>
+                            <span class="lang-de">Kreativitätslevel</span>
+                            <span class="lang-en">Creativity Level</span>
+                            <span class="label-balanced">Balanced</span>
+                        </h3>
+                        <div class="slider-container">
+                            <input type="range" id="creativity-slider" name="creativityLevel" min="1" max="6" value="3">
+                            <div class="slider-markers">
+                                <span></span><span></span><span></span><span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <small class="slider-description">
+                            <span class="lang-de">Passe den kreativen Spielraum der KI an</span>
+                            <span class="lang-en">Adjust the AI's imaginative flair</span>
+                        </small>
+                    </div>
+                </div>
+
+                <!-- AI Model Selection -->
+                <div class="input-section">
+                    <h3><i class="fas fa-robot"></i> 
+                        <span class="lang-de">KI-Modell Auswahl</span>
+                        <span class="lang-en">AI Model Selection</span>
+                    </h3>
+                    <div class="model-toggle-container">
+                        <div class="model-toggle">
+                            <input type="radio" id="model-gemini-2" name="modelChoice" value="gemini-2.0" checked>
+                            <label for="model-gemini-2">Gemini 2.0</label>
+                            <input type="radio" id="model-gemini-2-5" name="modelChoice" value="gemini-2.5">
+                            <label for="model-gemini-2-5">Gemini 2.5</label>
+                            <span class="slider"></span>
+                        </div>
+                        <small class="model-description">
+                            <span class="lang-de">Gemini 2.0 (Standard) ist für Inhaltsgenerierung optimiert; Gemini 2.5 bietet erweiterte Funktionen, kann aber langsamer sein.</span>
+                            <span class="lang-en">Gemini 2.0 (default) is optimized for content generation; Gemini 2.5 offers advanced capabilities but may be slower.</span>
+                        </small>
+                    </div>
+                </div>
+
+                <div class="input-section">
+                    <button type="button" id="prompt-editor-toggle" class="collapsible-button">
+                        <i class="fas fa-pen"></i>
+                        <span class="lang-de">Anweisungen bearbeiten (Erweitert)</span>
+                        <span class="lang-en">Edit Instructions (Advanced)</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </button>
+                    <div id="prompt-editor-panel" class="collapsible-content" style="display: none;">
+                        <div class="form-group">
+                            <textarea id="core-instruction" name="coreInstruction" rows="5">Analyze the provided input (text, file, or image). Understand the main topic, key information, and context. Then, generate content according to the specified output format, length, and creativity level. Ensure the output is well-structured, informative, and engaging.</textarea>
+                            <div class="prompt-actions">
+                                <button type="button" id="save-prompt" class="action-button">
+                                    <i class="fas fa-save"></i>
+                                    <span class="lang-de">Speichern</span>
+                                    <span class="lang-en">Save</span>
+                                </button>
+                                <button type="button" id="reset-prompt" class="action-button secondary">
+                                    <i class="fas fa-undo"></i>
+                                    <span class="lang-de">Zurücksetzen</span>
+                                    <span class="lang-en">Reset</span>
+                                </button>
+                            </div>
+                            <small>
+                                <span class="lang-de">Lege fest, wie die KI den Inhalt verarbeiten soll. Eine hilfreiche Standardanweisung wird bereitgestellt.</span>
+                                <span class="lang-en">Guide the AI's approach. A helpful default is provided.</span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-section">
+                    <h3>
+                        <span class="lang-de">Optional: Zusätzlicher Text oder Anweisungen</span>
+                        <span class="lang-en">Optional: Additional Text or Instructions</span>
+                    </h3>
+                    <div class="form-group">
+                        <textarea id="content-textarea" name="content" placeholder=""></textarea>
+                        <small>
+                            <span class="lang-de">Wird verwendet, wenn Du keine Datei/Bild hochlädst, oder als zusätzlicher Kontext für Deine Uploads.</span>
+                            <span class="lang-en">Used if you don't upload a file/image, or as extra context for your uploads.</span>
+                        </small>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button type="submit" id="generate-button" class="generate-button" disabled>
+                        <i class="fas fa-magic"></i>
+                        <span class="lang-de">Inhalt generieren</span>
+                        <span class="lang-en">Generate Content</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="content-card result-card">
+            <div class="card-header">
+                <h2>
+                    <span class="lang-de">Generierte Ausgabe</span>
+                    <span class="lang-en">Generated Output</span>
+                </h2>
+                <div class="result-actions" id="result-actions" style="display: none;">
+                    <small class="save-tip">
+                        <span class="lang-de">Als PDF speichern: Verwende die Druckoption Deines Browsers</span>
+                        <span class="lang-en">Save as PDF: Use your browser's Print option</span>
+                    </small>
+                    <button id="download-html-button" class="action-button">
+                        <i class="fas fa-download"></i>
+                        <span class="lang-de">HTML herunterladen</span>
+                        <span class="lang-en">Download HTML</span>
+                    </button>
+                </div>
+            </div>
+            <div id="error-message" class="error" style="display: none;"></div>
+            <div id="output-container">
+                <div class="empty-state" id="empty-state">
+                    <i class="fas fa-file-alt"></i>
+                    <p>
+                        <span class="lang-de">Dein generierter Bericht wird hier angezeigt.</span>
+                        <span class="lang-en">Your generated report will appear here.</span>
+                    </p>
+                    <p class="empty-instruction">
+                        <span class="lang-de">Fülle das Formular aus und klicke auf "Inhalt generieren".</span>
+                        <span class="lang-en">Fill out the form and click "Generate Content".</span>
+                    </p>
+                </div>
+                <iframe id="output-frame" src="about:blank" style="display: none;"></iframe>
+            </div>
+        </div>
+    </main>
+
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-animation">
+                <div class="icon-morph-container">
+                    <div class="morph-icon"><i class="fas fa-file-alt"></i></div>
+                    <div class="morph-icon"><i class="fas fa-pen"></i></div>
+                    <div class="morph-icon"><i class="fas fa-brain"></i></div>
+                    <div class="morph-icon"><i class="fas fa-lightbulb"></i></div>
+                    <div class="morph-icon"><i class="fas fa-magic"></i></div>
+                </div>
+            </div>
+            <div class="loading-text">
+                <h3>
+                    <span class="lang-de">Generiere Deinen Inhalt...</span>
+                    <span class="lang-en">Generating your content...</span>
+                </h3>
+                <p id="loading-status">
+                    <span class="lang-de">Analysiere Deine Eingabe und bereite Antwort vor</span>
+                    <span class="lang-en">Analyzing your input and preparing response</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Ask.ai</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
