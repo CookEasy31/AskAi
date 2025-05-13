@@ -379,6 +379,12 @@ Stellen Sie sicher, dass Sie genau diese Tags verwenden und dass der HTML-Code v
     }
 });
 
+// --- Routes ---
+// Add a test route to confirm server is running
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Server is running correctly!' });
+});
+
 // --- Start Server ---
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);
